@@ -1,13 +1,15 @@
 # What I checked, and what the agent got wrong
-
+It changed the constants and the warning threshold, which was incorrect because the rules in congig_loader shouldn't be touched. 
 ## What the agent got wrong
+It solved the problem with changing first setups to pass the tests instead of an actual, long term solution. 
 
-The agent initially changed the constants and the warning threshold, which was incorrect because the rules defined in `config_loader` should not be touched. Instead of fixing the actual underlying problem, it initially tried to change the setup so that the tests would pass. That was not a proper long-term solution because it changed existing rules rather than fixing the wear calculation.
 
 ## What I checked before I accepted its work
 
-After giving clearer prompts and explicitly saying "DON'T CHANGE KNOWN_KEYS", the agent fixed the actual problem correctly. I ran `pytest` myself and confirmed that all 4 tests passed. I also checked the wear calculation directly and confirmed that it returned the correct value instead of 0. This showed that the `//` floor division bug had been fixed by changing it to `/`. To make sure the 80% rule was untouched, I checked the diff and confirmed that `WARN_AT_PERCENT = 80` had no `+` or `-` change.
+After correct prompts and saying "DONT CHANGE KNOWN_KEYS" it fixed correctly. Ans I checked it by running pytest and confirmed that all 4 tests passed and confirmed that it returns correct outputs instead of 0, showing that the // floor division bug was fixed by changing it to /.    make sure the 80% rule was untouched, I checked the WARN_AT_PERCENT = 80 had no + or - change
 
 ## What the data actually said
 
-The data showed that `km_since_service`, `avg_daily_km`, and `load_factor` were the strongest factors associated with breakdowns. The obvious-looking factors, `odometer_km` and `age_years`, were not as effective and were not useful indicators compared with the three stronger factors above.
+km_since_service, avg_daily_km, and load_factor were the strongest factors associated with breakdown 
+
+obvious-looking factors, odometer_km and age_years are not the most effective factors, and not useful indicators as first three factor that I mentioned above.
